@@ -47,6 +47,7 @@ while read -r GENOME
       done < <(tail -n +4 $DIR/"$PEP"_gennbs.tbl | head -n -10)
 
     #Generate FASTA with peptide sequences for each hit
+    #Note that tbl2fasta is a script in the github repo
     $GITDIR/tbl2fasta $DIR/"$PEP"_gennbs.seqtbl > $DIR/"$PEP"_gennbs.fa
 
     #Use muscle to make a multi sequence alignment from the fasta file

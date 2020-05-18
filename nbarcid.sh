@@ -33,7 +33,7 @@ while read -r GENOME
 
     #Makes a table file from the input sequence, with one line per sequence conaining both seqid and sequence
     #Note fasta2tbl is a script within the github reop
-    fasta2tbl $PEPSEQ > $DIR/"$PEP".seqtbl
+    $GITDIR/fasta2tbl $PEPSEQ > $DIR/"$PEP".seqtbl
 
     #Extract the peptide sequence names from hmmsearch output
     rm $DIR/"$PEP"_gennbs.seqtbl
@@ -43,7 +43,7 @@ while read -r GENOME
       done < <(tail -n +4 $DIR/"$PEP"_gennbs.tbl | head -n -10)
 
     #Generate FASTA with peptide sequences for each hit
-    tbl2fasta $DIR/"$PEP"_gennbs.seqtbl > $DIR/"$PEP"_gennbs.fa
+    $GITDIR/tbl2fasta $DIR/"$PEP"_gennbs.seqtbl > $DIR/"$PEP"_gennbs.fa
 
     #Use muscle to make a multi sequence alignment from the fasta file
     module load MUSCLE/3.8.31-foss-2016b

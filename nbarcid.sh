@@ -74,3 +74,57 @@ while read -r GENOME
         #Note tbl2fasta is a script in the github repo
         tbl2fasta $DIR/"$PEP"_specnbs.seqtbl > $DIR/"$PEP"_specnbs.fa
   done < $INPUTPEPTIDES
+
+#cat all species specific NBS and general NBS hits for each set of predicted peptides into a single file each for general nbs or species specific
+cat $DIR/*specnbs.fa >combinedspecnbs.fa
+cat $DIR/*gennbs.fa >combinedgennbs.fa
+
+#Use muscle to generate multi seuqence alignment
+module load MUSCLE/3.8.31-foss-2016b
+muscle -in $DIR/combinedgennbs.fa -out $DIR/combinedgennbs_msa.fa
+muscle -in $DIR/combinedspecnbs.fa -out $DIR/combinedspecnbs_msa.fa
+
+#Use FASTA file to generate species specific HMM file
+#Note we must re-load HMMER due to a version discrepency in software dependencies with MUSCLE
+module load HMMER/3.2.1-foss-2018b
+hmmbuild combinedgennbs_cuc.hmm $DIR/combinedgennbs_msa.fa
+hmmbuild combinedspecnbs_cuc.hmm $DIR/combinedspecnbs_msa.fa
+
+#use the above HMM files to search each set of peptides for hits with the two new motifs
+while read -r GENOME
+  do
+    PEPSEQ=$PEPDIR/$GENOME
+    PEP=${GENOME:0:5}
+    #Search protien sequences for more matches using species specific motif
+    hmmsearch --tblout $DIR/"$PEP"_combinedgennbs.tbl  combinedgennbs.hmm $PEPSEQ
+
+    #Make a fasta file of the results for organism specific hits
+    #Extract the peptide sequence names from hmmsearch output
+    rm $DIR/"$PEP"_combinedgennbs.seqtbl
+    while read -r SEQID B
+      do
+        grep -wE $SEQID $DIR/"$PEP".seqtbl >> $DIR/"$PEP"_combinedgennbs.seqtbl
+      done < <(tail -n +4 $DIR/"$PEP"_combinedgennbs.tbl | head -n -10)
+    #Generate FASTA with peptide sequences for each hit
+    #Note tbl2fasta is a script in the github repo
+    tbl2fasta $DIR/"$PEP"_combinedgennbs.seqtbl > $DIR/"$PEP"_combinedgennbs.fa
+  done < $INPUTPEPTIDES
+
+while read -r GENOME
+  do
+    PEPSEQ=$PEPDIR/$GENOME
+    PEP=${GENOME:0:5}
+    #Search protien sequences for more matches using species specific motif
+    hmmsearch --tblout $DIR/"$PEP"_combinedspecnbs.tbl  combinedspecnbs.hmm $PEPSEQ
+
+    #Make a fasta file of the results for organism specific hits
+    #Extract the peptide sequence names from hmmsearch output
+    rm $DIR/"$PEP"_combinedspecnbs.seqtbl
+    while read -r SEQID B
+      do
+        grep -wE $SEQID $DIR/"$PEP".seqtbl >> $DIR/"$PEP"_combinedspecnbs.seqtbl
+      done < <(tail -n +4 $DIR/"$PEP"_combinedspecnbs.tbl | head -n -10)
+    #Generate FASTA with peptide sequences for each hit
+    #Note tbl2fasta is a script in the github repo
+    tbl2fasta $DIR/"$PEP"_combinedspecnbs.seqtbl > $DIR/"$PEP"_combinedspecnbs.fa
+  done < $INPUTPEPTIDES

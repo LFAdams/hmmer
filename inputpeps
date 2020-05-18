@@ -1,13 +1,12 @@
-#List exact file names of peptide predictions, one per line 
 WCG_pep_v2.fa
- PI183967_pep.fa
- Gy14_pep_v2.fa
- Lsiceraria_pep_v1.fa
- C.argyrosperma_pep.fasta
- Cmaxima_pep_v1.1.fa
- Cmoschata_pep_v1.fa
- Cpepo_pep_v4.1.fa
- ChineseLong_pep_v3.fa
- WG_pep.fa
- CM3.6.1_pep.fasta
- 97103_pep_v2.fa
+PI183967_pep.fa
+Gy14_pep_v2.fa
+Lsiceraria_pep_v1.fa
+C.argyrosperma_pep.fasta
+Cmaxima_pep_v1.1.fa
+Cmoschata_pep_v1.fa
+Cpepo_pep_v4.1.fa
+ChineseLong_pep_v3.fa
+WG_pep.fa
+CM3.6.1_pep.fasta
+97103_pep_v2.fa

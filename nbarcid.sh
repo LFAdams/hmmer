@@ -55,6 +55,7 @@ while read -r GENOME
     muscle -in $DIR/"$PEP"_gennbs.fa -out $DIR/"$PEP"_gennbs_msa.fa
 
     #Use FASTA file to generate species specific HMM file
+    #Note we must re-load HMMER due to a version discrepency in software dependencies with MUSCLE
     module load HMMER/3.2.1-foss-2018b
     hmmbuild "$PEP"_"$MOT".hmm $DIR/"$PEP"_gennbs_msa.fa
 
@@ -73,4 +74,3 @@ while read -r GENOME
         #Note tbl2fasta is a script in the github repo
         tbl2fasta $DIR/"$PEP"_specnbs.seqtbl > $DIR/"$PEP"_specnbs.fa
   done < $INPUTPEPTIDES
-

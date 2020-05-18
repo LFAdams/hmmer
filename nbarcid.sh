@@ -96,7 +96,7 @@ while read -r GENOME
     PEPSEQ=$PEPDIR/$GENOME
     PEP=${GENOME:0:5}
     #Search protien sequences for more matches using species specific motif
-    hmmsearch --tblout $DIR/"$PEP"_combinedgennbs.tbl  combinedgennbs.hmm $PEPSEQ
+    hmmsearch --tblout $DIR/"$PEP"_combinedgennbs.tbl  combinedgennbs_cuc.hmm $PEPSEQ
 
     #Make a fasta file of the results for organism specific hits
     #Extract the peptide sequence names from hmmsearch output
@@ -115,7 +115,7 @@ while read -r GENOME
     PEPSEQ=$PEPDIR/$GENOME
     PEP=${GENOME:0:5}
     #Search protien sequences for more matches using species specific motif
-    hmmsearch --tblout $DIR/"$PEP"_combinedspecnbs.tbl  combinedspecnbs.hmm $PEPSEQ
+    hmmsearch --tblout $DIR/"$PEP"_combinedspecnbs.tbl  combinedspecnbs_cuc.hmm $PEPSEQ
 
     #Make a fasta file of the results for organism specific hits
     #Extract the peptide sequence names from hmmsearch output

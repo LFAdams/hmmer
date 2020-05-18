@@ -1,4 +1,5 @@
- WCG_pep_v2.fa
+#List exact file names of peptide predictions, one per line 
+WCG_pep_v2.fa
  PI183967_pep.fa
  Gy14_pep_v2.fa
  Lsiceraria_pep_v1.fa

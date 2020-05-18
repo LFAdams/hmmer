@@ -73,3 +73,4 @@ while read -r GENOME
         #Note tbl2fasta is a script in the github repo
         tbl2fasta $DIR/"$PEP"_specnbs.seqtbl > $DIR/"$PEP"_specnbs.fa
   done < $INPUTPEPTIDES
+

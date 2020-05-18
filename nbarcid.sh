@@ -6,16 +6,23 @@
 #PBS -l walltime=48:00:00
 
 #Set paths to inputs
+#GITDIR is the directory of the github repo, this allows the script to point at other scripts
 GITDIR=/home/lfa81121/hmmer/
+#input peptides should be a file with each set of genomic peptide predictions to be searched listed one per line.
 INPUTPEPTIDES=$GITDIR/inputpeps
+#Set output directory
 DIR=/scratch/lfa81121/nbarcid
+#HMM of general motif
 MOTIF=/scratch/lfa81121/hmmer/NB-ARC.hmm
+#Name of motif, used for file naming purposes
 MOT=NB-ARC
 
 cd $DIR
 
+#Read inputpeps and run motif search pipeline for each entry
 while read -r GENOME
   do
+    #Grabs the peptide predictions for the current genome
     PEPSEQ=/work/cemlab/reference_genomes/$GENOME
     PEP=${GENOME:0:5}
 
@@ -25,6 +32,7 @@ while read -r GENOME
     hmmsearch --tblout $DIR/"$PEP"_gennbs.tbl  $MOTIF $PEPSEQ
 
     #Makes a table file from the input sequence, with one line per sequence conaining both seqid and sequence
+    #Note fasta2tbl is a script within the github reop
     fasta2tbl $PEPSEQ > $DIR/"$PEP".seqtbl
 
     #Extract the peptide sequence names from hmmsearch output
@@ -57,5 +65,6 @@ while read -r GENOME
           done < <(tail -n +4 $DIR/"$PEP"_specnbs.tbl | head -n -10)
 
         #Generate FASTA with peptide sequences for each hit
+        #Note tbl2fasta is a script in the github repo
         tbl2fasta $DIR/"$PEP"_specnbs.seqtbl > $DIR/"$PEP"_specnbs.fa
   done < $INPUTPEPTIDES

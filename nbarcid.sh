@@ -16,14 +16,18 @@ DIR=/scratch/lfa81121/nbarcid
 MOTIF=/scratch/lfa81121/hmmer/NB-ARC.hmm
 #Name of motif, used for file naming purposes
 MOT=NB-ARC
+#This is the folder all the genomic peptide predictions are in
+PEPDIR=/work/cemlab/reference_genomes
 
+#Change working directory to output directory
 cd $DIR
 
 #Read inputpeps and run motif search pipeline for each entry
 while read -r GENOME
   do
     #Grabs the peptide predictions for the current genome
-    PEPSEQ=/work/cemlab/reference_genomes/$GENOME
+    PEPSEQ=$PEPDIR/$GENOME
+    #shortened name of peptide predictions, for file naming
     PEP=${GENOME:0:5}
 
     module load HMMER/3.2.1-foss-2018b

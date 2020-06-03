@@ -5,7 +5,7 @@
 #PBS -l walltime=48:00:00
 #PBS -l mem=16gb
 
-
+cd /scratch/lfa81121/nbarcid
 module load MUSCLE/3.8.31-foss-2016b
 
 

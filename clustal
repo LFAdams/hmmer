@@ -1,0 +1,11 @@
+#PBS -S /bin/bash
+#PBS -q batch
+#PBS -N j_clustal_omega
+#PBS -l nodes=1:ppn=1:AMD
+#PBS -l walltime=480:00:00
+#PBS -l mem=20gb
+
+cd /scratch/lfa81121/nbarcid
+
+module load Clustal-Omega/1.2.4-foss-2016b
+clustalo  -i atcucspecnbs.fa -o atcucspecnbs_msa.fa

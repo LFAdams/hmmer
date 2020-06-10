@@ -3,7 +3,7 @@
 #PBS -q batch
 #PBS -l nodes=1:ppn=8:AMD
 #PBS -l mem=40gb
-#PBS -l walltime=480:00:00
+#PBS -l walltime=48:00:00
 
 cd /scratch/lfa81121/nbarcid/
 

@@ -33,7 +33,7 @@ while read -r GENOME
     module load HMMER/3.2.1-foss-2018b
 
     #Uses the generic HMM file to search your protien sequences for matches
-    hmmsearch --tblout $DIR/"$PEP"_gennbs.tbl  $MOTIF $PEPSEQ
+    hmmsearch -E .001 --tblout $DIR/"$PEP"_gennbs.tbl  $MOTIF $PEPSEQ
 
     #Makes a table file from the input sequence, with one line per sequence conaining both seqid and sequence
     #Note fasta2tbl is a script within the github reop
@@ -60,7 +60,7 @@ while read -r GENOME
     hmmbuild "$PEP"_"$MOT".hmm $DIR/"$PEP"_gennbs_msa.fa
 
     #Search protien sequences for more matches using species specific motif
-    hmmsearch --tblout $DIR/"$PEP"_specnbs.tbl  "$PEP"_"$MOT".hmm $PEPSEQ
+    hmmsearch -E .001 --tblout $DIR/"$PEP"_specnbs.tbl  "$PEP"_"$MOT".hmm $PEPSEQ
 
     #Make a fasta file of the results for organism specific hits
         #Extract the peptide sequence names from hmmsearch output
@@ -96,7 +96,7 @@ while read -r GENOME
     PEPSEQ=$PEPDIR/$GENOME
     PEP=${GENOME:0:5}
     #Search protien sequences for more matches using species specific motif
-    hmmsearch --tblout $DIR/"$PEP"_combinedgennbs.tbl  combinedgennbs_cuc.hmm $PEPSEQ
+    hmmsearch -E .001 --tblout $DIR/"$PEP"_combinedgennbs.tbl  combinedgennbs_cuc.hmm $PEPSEQ
 
     #Make a fasta file of the results for organism specific hits
     #Extract the peptide sequence names from hmmsearch output
@@ -115,7 +115,7 @@ while read -r GENOME
     PEPSEQ=$PEPDIR/$GENOME
     PEP=${GENOME:0:5}
     #Search protien sequences for more matches using species specific motif
-    hmmsearch --tblout $DIR/"$PEP"_combinedspecnbs.tbl  combinedspecnbs_cuc.hmm $PEPSEQ
+    hmmsearch -E .001 --tblout $DIR/"$PEP"_combinedspecnbs.tbl  combinedspecnbs_cuc.hmm $PEPSEQ
 
     #Make a fasta file of the results for organism specific hits
     #Extract the peptide sequence names from hmmsearch output

@@ -3,7 +3,7 @@
 #PBS -q batch
 #PBS -l nodes=1:ppn=2:AMD
 #PBS -l mem=40gb
-#PBS -l walltime=48:00:00
+#PBS -l walltime=480:00:00
 
 #Set paths to inputs
 #GITDIR is the directory of the github repo, this allows the script to point at other scripts
